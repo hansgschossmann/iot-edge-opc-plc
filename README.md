@@ -110,7 +110,8 @@ docker run --rm -it -p 50000:50000 -p 8080:8080 --name opcplc mcr.microsoft.com/
 ~~~
 
 ## OPC Publisher file (pn.json)
-The option `sph` shows and dumps a pn.json file that matches the configuration. In addition, a web server hosts the file on a configurable port (`wp`, default 8080): e.g. http://localhost:8080/pn.json
+The options `sph` and `sp` show and dump an OPC Publisher configuration file (default name: `pn.json`) that matches the configuration. In addition, a web server hosts the file on a configurable port (`wp`, default 8080): e.g. http://localhost:8080/pn.json
+Additionally, you can set the configuration file name via the option `spf`.
 
 ## Build
 
@@ -128,6 +129,12 @@ If you want to build using docker yourself, it is a bit more complicated, since 
 So first run the `build.ps1 script` as above, then locate under `<reporoot>/src/bin/publish` the dockerfile for your configuration and target runtime.
 Next make your modifications and publish the opc-plc project of the solution in Visual Studio. Ensure that you have chosen "Self-Contained" as "Deployment Mode" and the 
 correct "Target runtime" in the Visual Studio Publish configuration. Next run `docker build` command in the folder you published to using the dockerfile of your configuration and target runtime. 
+
+Doing it pure command line based in powershell is even simpler. Here an example for an linux-amd64 build:
+~~~
+.\tools\scripts\docker-source.ps1 .\src
+docker build -f .\src\bin\publish\Release\linux-x64\Dockerfile.linux-amd64 -t iotedge/opc-plc .\src\bin\publish\Release\linux-x64
+~~~
 
 ## Notes
 
